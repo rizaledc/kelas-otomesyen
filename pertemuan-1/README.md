@@ -9,8 +9,8 @@ Repositori ini berisi kumpulan tugas dan project dari Kelas Agentic AI Automatio
 ```
 kelas-otomesyen/
 ├── pertemuan-1/
-│   └── index.html
-└── README.md
+    └── index.html
+    └── README.md
 ```
 
 ---

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rizal Wahyu Pratama — ML Geospatial Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --maroon: #6B1A1A;
+    --maroon-dark: #4A1010;
+    --gold: #C9A84C;
+    --gold-dim: rgba(201,168,76,0.12);
+    --white: #FFFFFF;
+    --off-white: #FAF8F5;
+    --muted: #7A6060;
+    --border: rgba(107,26,26,0.1);
+    --border-gold: rgba(201,168,76,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--maroon-dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--maroon-dark);
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--maroon); }
+
+  .nav-cta {
+    background: var(--maroon) !important;
+    color: var(--white) !important;
+    padding: 0.42rem 1.1rem;
+    border-radius: 6px;
+  }
+
+  .nav-cta:hover { background: var(--maroon-dark) !important; }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--maroon);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--off-white);
+    padding: 8rem 2rem 5rem;
+  }
+
+  .hero-inner { max-width: 640px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-gold);
+    padding: 0.32rem 0.9rem;
+    border-radius: 100px;
+    background: var(--gold-dim);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--maroon-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--maroon); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--maroon);
+    color: var(--white);
+    padding: 0.7rem 1.6rem;
+    border-radius: 7px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--maroon-dark); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    color: var(--maroon);
+    padding: 0.7rem 1.6rem;
+    border-radius: 7px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(107,26,26,0.25);
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { background: var(--maroon); color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--maroon);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.67rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-weight: 700;
+    color: var(--maroon-dark);
+    line-height: 1.15;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ABOUT */
+  .about { background: var(--white); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 0.9rem;
+  }
+
+  .skills-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1rem;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .skill-icon {
+    width: 30px; height: 30px;
+    background: rgba(107,26,26,0.07);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--maroon);
+  }
+
+  .skill-info { flex: 1; }
+
+  .skill-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--maroon-dark);
+    margin-bottom: 0.22rem;
+  }
+
+  .skill-bar {
+    height: 2px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--maroon), var(--gold));
+    border-radius: 100px;
+  }
+
+  /* PROJECTS */
+  .projects { background: var(--off-white); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.6rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--maroon), var(--gold));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(107,26,26,0.09); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-icon {
+    width: 40px; height: 40px;
+    background: rgba(107,26,26,0.07);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--maroon);
+  }
+
+  .project-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--maroon-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .project-card p {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .tag {
+    font-size: 0.63rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    background: rgba(107,26,26,0.06);
+    color: var(--maroon);
+    border: 1px solid var(--border);
+  }
+
+  .tag-gold {
+    background: var(--gold-dim);
+    color: #8B6B1A;
+    border-color: var(--border-gold);
+  }
+
+  /* SERVICES */
+  .services { background: var(--white); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .service-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .service-card:hover { border-color: rgba(107,26,26,0.3); }
+
+  .service-icon {
+    width: 38px; height: 38px;
+    background: rgba(107,26,26,0.07);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+    color: var(--maroon);
+  }
+
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--maroon-dark);
+    margin-bottom: 0.35rem;
+  }
+
+  .service-card p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--maroon-dark);
+    text-align: center;
+  }
+
+  .contact .section-eyebrow { color: rgba(201,168,76,0.8); display: flex; justify-content: center; }
+  .contact .section-title { color: var(--white); }
+
+  .contact-sub {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 380px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gold);
+    color: var(--maroon-dark);
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .contact-email:hover { background: #E2C97E; }
+
+  .contact-links {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.1rem;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.78rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover { color: var(--gold); border-color: var(--border-gold); }
+
+  /* FOOTER */
+  footer {
+    background: #2A0808;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .footer-meta { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+
+  .deployed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.65rem;
+    color: #4ade80;
+    background: rgba(74,222,128,0.08);
+    padding: 0.22rem 0.65rem;
+    border-radius: 100px;
+    font-weight: 500;
+    border: 1px solid rgba(74,222,128,0.15);
+  }
+
+  .dot-live {
+    width: 5px; height: 5px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 57px; left: 0; right: 0;
+      background: var(--white);
+      padding: 1.5rem;
+      gap: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+    }
+    section { padding: 3.5rem 1.25rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; text-align: center; padding: 1.25rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 2.2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Rizal<span>.</span>WP</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <i data-lucide="menu" style="width:22px;height:22px;"></i>
+  </button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <i data-lucide="circle-dot" style="width:11px;height:11px;"></i>
+      Available for Projects
+    </div>
+    <h1>Machine Learning<br><em>Geospatial</em> Engineer</h1>
+    <div class="hero-name">Rizal Wahyu Pratama</div>
+    <p class="hero-sub">
+      Mahasiswa Data Science Telkom University Purwokerto.<br>
+      Spesialis ML, geospatial analysis, dan web development.<br>
+      Founder of Kodinginaja.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <i data-lucide="mail" style="width:14px;height:14px;"></i>
+        Hubungi Saya
+      </a>
+      <a href="#projects" class="btn-outline">
+        <i data-lucide="folder-open" style="width:14px;height:14px;"></i>
+        Lihat Projects
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3.93</div>
+        <div class="stat-label">GPA / 4.00</div>
+      </div>
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">2027</div>
+        <div class="stat-label">Target Lulus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <i data-lucide="user" style="width:12px;height:12px;"></i>
+      About
+    </div>
+    <h2 class="section-title">Siapa Rizal WP?</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Mahasiswa S1 Data Science semester 6 di Telkom University Purwokerto, penerima beasiswa penuh APERTI BUMN 2023. Saat ini magang di BPS Kabupaten Banyumas dan membangun startup Kodinginaja.</p>
+        <p>Fokus di persimpangan machine learning dan geospatial engineering — mengolah citra satelit, sensor IoT, dan model prediktif untuk menghasilkan insight berdampak nyata di sektor pertanian dan hidrologi.</p>
+      </div>
+      <div class="skills-list">
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="brain" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">Machine Learning</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="satellite" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">Google Earth Engine</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="code-2" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">Python</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="layout-dashboard" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">React + FastAPI</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="database" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">SQL & Data Analysis</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon"><i data-lucide="container" style="width:15px;height:15px;"></i></div>
+          <div class="skill-info">
+            <div class="skill-name">Docker & VPS</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <i data-lucide="folder-open" style="width:12px;height:12px;"></i>
+      Projects
+    </div>
+    <h2 class="section-title">Karya yang Saya Banggakan</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-icon"><i data-lucide="satellite-dish" style="width:20px;height:20px;"></i></div>
+        <h3>Orbitani</h3>
+        <p>Platform precision agriculture — sensor tanah IoT Orbistick, citra satelit Landsat, dan Random Forest rekomendasi 22 komoditas.</p>
+        <div class="project-tags">
+          <span class="tag">FastAPI</span>
+          <span class="tag">React</span>
+          <span class="tag">GEE</span>
+          <span class="tag tag-gold">HKI Terdaftar</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon"><i data-lucide="droplets" style="width:20px;height:20px;"></i></div>
+        <h3>GRACE Downscaling</h3>
+        <p>Spatial downscaling data groundwater storage GRACE untuk Pulau Jawa menggunakan machine learning dan data multispektral.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">GEE</span>
+          <span class="tag">Random Forest</span>
+          <span class="tag tag-gold">Skripsi S1</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon"><i data-lucide="globe" style="width:20px;height:20px;"></i></div>
+        <h3>Kodinginaja</h3>
+        <p>Startup web development dan data analysis untuk UMKM dan individu di Indonesia.</p>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag tag-gold">Startup</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <i data-lucide="briefcase" style="width:12px;height:12px;"></i>
+      Services
+    </div>
+    <h2 class="section-title">Apa yang Bisa Saya Bantu?</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><i data-lucide="brain-circuit" style="width:18px;height:18px;"></i></div>
+        <h3>Machine Learning</h3>
+        <p>Klasifikasi, regresi, clustering, dan rekomendasi siap deployment.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i data-lucide="map" style="width:18px;height:18px;"></i></div>
+        <h3>Geospatial Analysis</h3>
+        <p>Citra satelit, pemetaan spasial, dan pipeline Google Earth Engine.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i data-lucide="monitor-smartphone" style="width:18px;height:18px;"></i></div>
+        <h3>Web Development</h3>
+        <p>Landing page hingga web app full-stack yang responsif dan modern.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i data-lucide="bar-chart-3" style="width:18px;height:18px;"></i></div>
+        <h3>Data Analysis</h3>
+        <p>Eksplorasi data, visualisasi, dan laporan insight bisnis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <i data-lucide="send" style="width:12px;height:12px;"></i>
+      Contact
+    </div>
+    <h2 class="section-title">Mari Berkolaborasi</h2>
+    <p class="contact-sub">Terbuka untuk diskusi, kolaborasi, dan freelance work.</p>
+    <a href="mailto:rizalwp@student.telkomuniversity.ac.id" class="contact-email">
+      <i data-lucide="mail" style="width:15px;height:15px;"></i>
+      rizalwp@student.telkomuniversity.ac.id
+    </a>
+    <div class="contact-links">
+      <a href="https://github.com/rizaledc" class="contact-link" target="_blank">
+        <i data-lucide="github" style="width:13px;height:13px;"></i>
+        GitHub
+      </a>
+      <a href="https://kodinginaja.biz.id" class="contact-link" target="_blank">
+        <i data-lucide="globe" style="width:13px;height:13px;"></i>
+        Kodinginaja
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Rizal WP</div>
+  <span class="deployed-badge"><span class="dot-live"></span>Deployed via Docker + VPS</span>
+  <div class="footer-meta">© 2026 Rizal Wahyu Pratama</div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.innerHTML = navLinks.classList.contains('open')
+      ? '<i data-lucide="x" style="width:22px;height:22px;"></i>'
+      : '<i data-lucide="menu" style="width:22px;height:22px;"></i>';
+    lucide.createIcons();
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.innerHTML = '<i data-lucide="menu" style="width:22px;height:22px;"></i>';
+      lucide.createIcons();
+    });
+  });
+</script>
+</body>
+</html>
